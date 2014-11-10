@@ -1,6 +1,6 @@
 {
   "name": "imessage",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Node bindings to Apple iMessage",
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,7 @@
   "author": "Nicola Greco <me@nicola.io> (http://nicolagreco.com/)",
   "license": "ISC",
   "dependencies": {
+    "q": "^1.1.1",
     "sqlite3": "^3.0.2"
   }
 }
