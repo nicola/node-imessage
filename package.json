@@ -1,0 +1,14 @@
+{
+  "name": "imessage",
+  "version": "0.1.0",
+  "description": "Node bindings to Apple iMessage",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nicola Greco <me@nicola.io> (http://nicolagreco.com/)",
+  "license": "ISC",
+  "dependencies": {
+    "sqlite3": "^3.0.2"
+  }
+}
