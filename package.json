@@ -1,6 +1,6 @@
 {
   "name": "imessage",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "Node bindings to Apple iMessage",
   "main": "index.js",
   "scripts": {

@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var iMessage = require('../index.js');
 var im = new iMessage();
 
