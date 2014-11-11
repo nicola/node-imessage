@@ -79,16 +79,23 @@ iMessage.prototype.getRecipientById = function(id, details, cb) {
   });
 };
 
-iMessage.prototype.getMessages = function(string, cb) {
+iMessage.prototype.getMessages = function(string, details, cb) {
   if (typeof string == 'function') {
     cb = string;
     string = false;
   }
+  if (typeof details == 'function') {
+    cb = details;
+    details = false;
+  }
+
   this.db.done(function(db) {
     var where = "";
+    var join = "";
     // Maybe dangerous, check SQLlite doc
-    if (string) where = " WHERE text LIKE '%"+string+"%'";
-    db.all("SELECT * FROM `messages`" + where, cb);
+    if (string) where = " WHERE `message`.text LIKE '%"+string+"%'";
+    if (details) join = " JOIN `handle` ON `handle`.ROWID = `message`.handle_id";
+    db.all("SELECT * FROM `message`" + join + where, cb);
   });
 };
 

@@ -12,6 +12,27 @@ npm install imessage --save
 
 ## Usage
 
+### Command line
+
+```
+Usage: imessagejs <command>
+
+command     
+  search     Search messages with particular text
+```
+
+#### Search
+
+```
+Usage: imessage search "text to search" [options]
+
+Options:
+   --count   Just return the count
+   --json    Print in json format
+```
+
+### NodeJS Library
+
 #### Recipients
 
 ```javascript
