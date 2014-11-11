@@ -18,13 +18,25 @@ npm install imessage --save
 Usage: imessagejs <command>
 
 command     
-  search     Search messages with particular text
+  search         Search messages with particular text
+  recipients     Search messages with particular recipient
 ```
 
 #### Search
 
 ```
-Usage: imessage search "text to search" [options]
+Usage: imessagejs search "text to search" [options]
+
+Options:
+   --count       Just return the count
+   --recipient   ID of the recipient
+   --json        Print in json format
+```
+
+#### Recipients
+
+```
+Usage: imessagejs recipients ["recipient name to filter"] [options]
 
 Options:
    --count   Just return the count

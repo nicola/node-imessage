@@ -15,12 +15,12 @@ module.exports = iMessage;
 
 function iMessage(opts) {
   opts = opts || {};
-  this.path = opts.path || this.DB_PATH;
+  this.path = opts.path || iMessage.DB_PATH;
   this.db = this.connect();
 }
 
-iMessage.prototype.OSX_EPOCH = 978307200;
-iMessage.prototype.DB_PATH = path.join(HOME, '/Library/Messages/chat.db');
+iMessage.OSX_EPOCH = 978307200;
+iMessage.DB_PATH = path.join(HOME, '/Library/Messages/chat.db');
 
 iMessage.prototype.connect = function() {
   var deferred = Q.defer();
@@ -56,7 +56,7 @@ iMessage.prototype.getRecipients = function(string, cb) {
   this.db.done(function(db) {
     var where = "";
     // Maybe dangerous, check SQLlite doc
-    if (string) where = " WHERE id LIKE '%"+string+"%'";
+    if (string && string != "") where = " WHERE id LIKE '%"+string+"%'";
     db.all("SELECT * FROM `handle`" + where, cb);
   });
 };
@@ -93,15 +93,23 @@ iMessage.prototype.getMessages = function(string, details, cb) {
     var where = "";
     var join = "";
     // Maybe dangerous, check SQLlite doc
-    if (string) where = " WHERE `message`.text LIKE '%"+string+"%'";
+    if (string && string != "") where = " WHERE `message`.text LIKE '%"+string+"%'";
     if (details) join = " JOIN `handle` ON `handle`.ROWID = `message`.handle_id";
     db.all("SELECT * FROM `message`" + join + where, cb);
   });
 };
 
-iMessage.prototype.getMessagesFromId = function(id, cb) {
+iMessage.prototype.getMessagesFromId = function(id, string, cb) {
+  if (typeof string == 'function') {
+    cb = string;
+    string = false;
+  }
+
   this.db.done(function(db) {
-    db.all("SELECT * FROM `message` WHERE handle_id = $id", {$id: id}, function(err, messages) {
+    var where = "";
+    // Maybe dangerous, check SQLlite doc
+    if (string && string != "") where = " AND text LIKE '%"+string+"%'";
+    db.all("SELECT * FROM `message` WHERE handle_id = $id"+where, {$id: id}, function(err, messages) {
       cb(err, messages);
     });
   });

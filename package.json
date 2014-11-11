@@ -9,6 +9,7 @@
   "author": "Nicola Greco <me@nicola.io> (http://nicolagreco.com/)",
   "license": "ISC",
   "dependencies": {
+    "moment": "^2.8.3",
     "nomnom": "^1.8.1",
     "q": "^1.1.1",
     "sqlite3": "^3.0.2"
