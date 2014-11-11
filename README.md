@@ -74,6 +74,8 @@ im.getMessages("hello you", cb);
 
 // Get messages from recipient Id
 im.getMessagesFromId(1, cb)
+// Get messages from recipient with specific text
+im.getMessagesFromId(1, "with text", cb)
 ```
 
 #### Attachments
