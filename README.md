@@ -12,6 +12,59 @@ npm install imessage --save
 
 ## Usage
 
+#### Recipients
+
+```javascript
+var iMessage = require('imessage');
+var im = new iMessage();
+
+// Get all recipients
+im.getRecipients(cb)
+
+// Get recipients with "nicola"
+im.getRecipients("nicola", cb)
+
+// Get recipient Id
+im.getRecipientById(1, cb)
+// Get recipient and all of his messages
+im.getRecipientById(1, true, cb)
+```
+
+#### Messages
+
+```javascript
+// Get all messages
+im.getMessages(cb)
+
+// Get messages with text
+im.getMessages("hello you", cb);
+
+// Get messages from recipient Id
+im.getMessagesFromId(1, cb)
+```
+
+#### Attachments
+
+```javascript
+// Get all attachments
+im.getAttachments(cb)
+
+// Get attachements from recipient Id
+im.getAttachmentsFromId(1, cb)
+```
+
+### Use raw SQL queries
+
+```javascript
+var iMessage = require('imessage');
+
+var im = new iMessage();
+im.getDb(function(err, db) {
+  db.get("SELECT * FROM `messages`");
+})
+```
+
+### Ideally
 
 ```javascript
 var iMessage = require('imessage');
@@ -25,15 +78,4 @@ im
   .exec(function(err, rows) {
     console.log(rows);
   })
-```
-
-### Use raw SQL queries
-
-```javascript
-var iMessage = require('imessage');
-
-var im = new iMessage();
-im.getDb(function(err, db) {
-  db.get("SELECT * FROM `messages`");
-})
 ```

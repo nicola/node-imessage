@@ -79,6 +79,18 @@ iMessage.prototype.getRecipientById = function(id, details, cb) {
   });
 };
 
+iMessage.prototype.getMessages = function(string, cb) {
+  if (typeof string == 'function') {
+    cb = string;
+    string = false;
+  }
+  this.db.done(function(db) {
+    var where = "";
+    // Maybe dangerous, check SQLlite doc
+    if (string) where = " WHERE text LIKE '%"+string+"%'";
+    db.all("SELECT * FROM `messages`" + where, cb);
+  });
+};
 
 iMessage.prototype.getMessagesFromId = function(id, cb) {
   this.db.done(function(db) {
@@ -107,7 +119,7 @@ iMessage.prototype.getAttachments = function(cb) {
       INNER JOIN `message` \
       ON `message`.ROWID = `message_attachment_join`.message_id \
       INNER JOIN `attachment` \
-      ON `attachment`.ROWID = `message_attachment_join`.attachment_id", {}, cb);
+      ON `attachment`.ROWID = `message_attachment_join`.attachment_id", cb);
   });
 };
 
