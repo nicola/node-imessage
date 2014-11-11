@@ -10,6 +10,12 @@ Binds iMessage to NodeJS (read-only)
 npm install imessage --save
 ```
 
+To use the command line tool
+
+```
+npm install -g imessage
+```
+
 ## Usage
 
 ### Command line
