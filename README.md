@@ -4,6 +4,8 @@ Binds iMessage to NodeJS (read-only)
 
 #### ATTENTION: only available to brave coders, heavy development going on.
 
+This has been a night hack and we are awesomely trending on HN, [upvote](https://news.ycombinator.com/item?id=8589152) and star the project to be updated.
+
 ## Install
 
 ```
