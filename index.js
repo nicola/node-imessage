@@ -114,6 +114,14 @@ iMessage.prototype.getAttachments = function(cb) {
     .nodeify(cb);
 };
 
+iMessage.prototype.raw = function (sql, bindings, cb) {
+  if (typeof bindings === 'function') {
+    bindings = void 0;
+    cb = bindings;
+  }
+  return this.knex.raw(sql, bindings).nodeify(cb);
+};
+
 iMessage.prototype.disconnect = function() {
   return this.knex.destroy();
 };

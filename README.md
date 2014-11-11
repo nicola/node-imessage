@@ -102,9 +102,11 @@ im.getAttachmentsFromId(1, cb)
 var iMessage = require('imessage');
 
 var im = new iMessage();
-im.getDb(function(err, db) {
-  db.get("SELECT * FROM `messages`");
-})
+// plain queries
+im.raw('SELECT * FROM message', cb);
+
+// or with bindings
+im.raw('SELECT * message WHERE handle_id = ?', [1], cb);
 ```
 
 ### Ideally
