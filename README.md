@@ -124,5 +124,5 @@ im
   })
 ```
 
-[imessage-downloads-image]: https://img.shields.io/npm/dy/imessage.svg?style=flat
+[imessage-downloads-image]: https://img.shields.io/npm/dm/imessage.svg?style=flat
 [imessage-downloads-url]: https://npmjs.org/package/imessage
