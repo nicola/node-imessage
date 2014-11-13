@@ -1,8 +1,9 @@
 # node-imessage
+[![Build Status][imessage-downloads-image]][imessage-downloads-url]
 
 Binds iMessage to NodeJS (read-only)
 
-#### ATTENTION: only available to brave coders, heavy development going on.
+##### ATTENTION: only available to brave coders, heavy development going on.
 
 [Discuss on HN](https://news.ycombinator.com/item?id=8589152) or star the project to be updated.
 
@@ -122,3 +123,6 @@ im
     console.log(rows);
   })
 ```
+
+[imessage-downloads-image]: https://img.shields.io/npm/dy/imessage.svg?style=flat
+[imessage-downloads-url]: https://npmjs.org/package/imessage
