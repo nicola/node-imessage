@@ -1,0 +1,34 @@
+body {
+  background: #131724;
+  color: #fff;
+  font-family: 'Lucida Grande';
+  font-size: 20px;
+  text-shadow: 0 1px 1px #000;
+}
+
+p {
+  font-size: 1.5em;
+}
+
+section {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.message {
+  text-align: right;
+}
+
+.message.me {
+  text-align: left;
+}
+
+.message h4 {
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+.message p {
+  padding-top: 0px;
+  margin-top: 0px;
+}
