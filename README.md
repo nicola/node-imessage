@@ -124,5 +124,9 @@ im
   })
 ```
 
+## Examples
+
+- [Express implementation](https://github.com/nicola/node-imessage/tree/master/examples/express-imessage)
+
 [imessage-downloads-image]: https://img.shields.io/npm/dm/imessage.svg?style=flat
 [imessage-downloads-url]: https://npmjs.org/package/imessage
