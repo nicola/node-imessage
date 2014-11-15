@@ -1,0 +1,19 @@
+{
+  "name": "express-imessage",
+  "version": "0.0.0",
+  "homepage": "https://github.com/nicola/node-imessage",
+  "authors": [
+    "nicola <notsecurity@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.3.2"
+  }
+}

@@ -1,0 +1,22 @@
+# express-imessage
+
+Bring your **iMessages on your browser**.
+This example runs a NodeJS Express server that expose iMessage data via a JSON API.
+
+In this way we can invent and create new types of visualizations of our messages which could involve data visualization, natural language process and machine learning.
+
+## Api available
+
+- `api/messages`
+- `api/recipients`
+
+## Current implementation
+
+- AngularJS
+- Express
+- node-imessage
+
+## Potential roadmap
+
+- node-webkit's app to have an iMessage app with extra features
+- node-applescript to send messages
