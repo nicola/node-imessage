@@ -127,6 +127,7 @@ im
 ## Examples
 
 - [Express implementation](https://github.com/nicola/node-imessage/tree/master/examples/express-imessage)
+- [Gist - Find all links sent through iMessage](https://gist.github.com/nicola/309787e78ee0d7bedeec)
 
 [imessage-downloads-image]: https://img.shields.io/npm/dm/imessage.svg?style=flat
 [imessage-downloads-url]: https://npmjs.org/package/imessage
