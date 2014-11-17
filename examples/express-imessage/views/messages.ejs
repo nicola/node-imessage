@@ -1,9 +1,9 @@
 <html ng-app="imessage2">
 <head>
-	<title>iMessage with Express</title>
-	 <link href="/style.css" rel="stylesheet" type="text/css"/>
-	 <link href="/favicon.png" rel="icon" type="image/x-icon" />
-	 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+  <title>iMessage with Express</title>
+   <link href="/style.css" rel="stylesheet" type="text/css"/>
+   <link href="/favicon.png" rel="icon" type="image/x-icon" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 </head>
 <body ng-controller="imMessages">
   <section class="container">
@@ -21,7 +21,7 @@
   <script type="text/javascript">
 
   angular.module('imessage2', [])
-    .controller('imMessages', function($scope, $http) {
+    .controller('imMessages', function($scope, $http, $location) {
       $scope.messages = []
       $scope.contacts = {};
 
@@ -34,7 +34,7 @@
           $scope.contacts = contactsDict;
         })
 
-      $http.get('/api/data')
+      $http.get('/api/messages/' + $location.absUrl().replace(/.*\//,''))
         .success(function(messages) {
           $scope.messages = messages;
         })

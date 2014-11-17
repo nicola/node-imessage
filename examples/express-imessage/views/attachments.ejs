@@ -1,0 +1,48 @@
+<html ng-app="imessage2">
+<head>
+	<title>iMessage with Express</title>
+	 <link href="/style.css" rel="stylesheet" type="text/css"/>
+	 <link href="/favicon.png" rel="icon" type="image/x-icon" />
+	 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+</head>
+<body ng-controller="imMessages">
+
+  <label>Grid visualization: <input type="checkbox" ng-model="viz.grid"></label>
+  <section ng-class="{grid:viz.grid}" ng-show="messages.length">
+    
+    <div ng-repeat="message in messages" class="message" ng-class="{'me': message.is_from_me}">
+      <h4 class="author" ng-show="message.is_from_me">Me to {{contacts[message.handle_id].id}}</h4>
+      <h4 class="author" ng-show="!message.is_from_me">{{contacts[message.handle_id].id}}</h4>
+
+      <a ng-href="/show/attachments/{{message.attachment_id}}" ng-show="message.mime_type == 'image/jpeg' || message.mime_type == 'image/gif' || message.mime_type == 'image/png'"><img class="content" ng-src="/show/attachments/{{message.attachment_id}}"></a>
+      <p class="content" ng-show="message.mime_type == 'video/quicktime'" width="320" height="240" controls>
+        Videos not implemented yet
+      </p>
+    </div>
+  </section>
+  <section ng-hide="messages.length">No attachment</section>
+  <script type="text/javascript" src="/bower_components/angular/angular.js"></script>
+  <script type="text/javascript">
+
+  angular.module('imessage2', [])
+    .controller('imMessages', function($scope, $http, $location) {
+      $scope.messages = []
+      $scope.contacts = {};
+
+      $http.get('/api/contacts')
+        .success(function(contacts) {
+          var contactsDict = {}
+          contacts.forEach(function(contact) {
+            contactsDict[contact.ROWID] = contact;
+          })
+          $scope.contacts = contactsDict;
+        })
+
+      $http.get('/api/attachments/' + $location.absUrl().replace(/.*\//,''))
+        .success(function(messages) {
+          $scope.messages = messages;
+        })
+    })
+  </script>
+</body>
+</html>

@@ -32,3 +32,26 @@ section {
   padding-top: 0px;
   margin-top: 0px;
 }
+.grid {
+-moz-column-count: 3;
+    -moz-column-gap: 10px;
+    -webkit-column-count: 3;
+    -webkit-column-gap: 10px;
+    column-count: 3;
+    column-gap: 10px;
+
+}
+.message img {
+  width: 200px;
+}
+.grid .message {
+  display: inline-block; /* Display inline-block, and absolutely NO FLOATS! */
+        margin-bottom: 20px;
+        width: 100%;
+}
+.grid .message img {
+  width: 100%;
+}
+.grid .author {
+  display: none;
+}

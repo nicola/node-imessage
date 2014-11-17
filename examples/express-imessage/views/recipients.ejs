@@ -1,19 +1,20 @@
 <html ng-app="imessage2">
 <head>
-	<title>iMessage with Express</title>
-	 <link href="/style.css" rel="stylesheet" type="text/css"/>
-	 <link href="/favicon.png" rel="icon" type="image/x-icon" />
-	 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+  <title>iMessage with Express</title>
+   <link href="/style.css" rel="stylesheet" type="text/css"/>
+   <link href="/favicon.png" rel="icon" type="image/x-icon" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 </head>
 <body ng-controller="imMessages">
   <section class="container">
     <input type="text" ng-model="search.text">
     
-    <div ng-repeat="message in messages | filter:search" class="message" ng-class="{'me': message.is_from_me}">
-
-      <h4 ng-show="message.is_from_me">Me to {{contacts[message.handle_id].id}}</h4>
-      <h4 ng-show="!message.is_from_me">{{contacts[message.handle_id].id}}</h4>
-      <p>{{message.text}}</p>
+    <div ng-repeat="contact in contacts | filter:search" class="message" ng-class="{'me': message.is_from_me}">
+      <h4>{{contact.id}}</h4>
+      <ul>
+        <li><a ng-href="/attachments/{{contact.ROWID}}">Attachments</a></li>
+        <li><a ng-href="/messages/{{contact.ROWID}}">Messages</a></li>
+      </ul>
     </div>
   </section>
 
@@ -32,11 +33,6 @@
             contactsDict[contact.ROWID] = contact;
           })
           $scope.contacts = contactsDict;
-        })
-
-      $http.get('/api/data')
-        .success(function(messages) {
-          $scope.messages = messages;
         })
     })
   </script>

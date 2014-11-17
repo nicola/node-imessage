@@ -128,6 +128,19 @@ iMessage.prototype.getAttachmentsFromId = function(id, cb) {
   });
 };
 
+iMessage.prototype.getAttachmentById = function(id, cb) {
+  this.db.done(function(db) {
+    db.get("SELECT * FROM `message` \
+      INNER JOIN `message_attachment_join` \
+      ON `message`.ROWID = `message_attachment_join`.message_id \
+      INNER JOIN `attachment` \
+      ON `attachment`.ROWID = `message_attachment_join`.attachment_id \
+      WHERE `message_attachment_join`.attachment_id = $id", {$id: id}, function(err, messages) {
+      cb(err, messages);
+    });
+  });
+};
+
 iMessage.prototype.getAttachments = function(cb) {
   this.db.done(function(db) {
     db.all("SELECT * FROM `message_attachment_join` \
