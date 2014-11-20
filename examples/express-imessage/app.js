@@ -40,6 +40,10 @@ app.get("/attachments/:id", function (req, res) {
   res.render("attachments");
 });
 
+app.get("/links/:id", function (req, res) {
+  res.render("links");
+});
+
 app.get("/api/data", function (req, res) {
   im.getMessages(function(err, data) {
     res.json(data.map(function(d) {
@@ -73,6 +77,16 @@ app.get("/api/attachments/:id", function (req, res) {
     res.json(data.map(function(d) {
       d.attributedBody = null;
       d.filename = d.filename.replace('~', getUserHome());
+      delete d.attributedBody;
+      return d;
+    }));
+  });
+});
+
+app.get("/api/links/:id", function (req, res) {
+  im.getMessagesFromId(req.params.id, 'http', function(err, data) {
+    res.json(data.map(function(d) {
+      d.attributedBody = null;
       delete d.attributedBody;
       return d;
     }));
