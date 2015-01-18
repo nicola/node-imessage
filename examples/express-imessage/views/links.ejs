@@ -5,19 +5,44 @@
    <link href="/favicon.png" rel="icon" type="image/x-icon" />
    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 </head>
-<body ng-controller="imMessages">
+<body ng-controller="imMessages" id="links-page">
   <section class="container">
-    <input type="text" ng-model="search.text">
-    <label>Only links: <input type="checkbox" ng-model="viz.url_only"></label>
-    <div ng-hide="viz.url_only" ng-repeat="message in messages | filter:search" class="message" ng-class="{'me': message.is_from_me}">
-
-      <h4 ng-show="message.is_from_me">Me to {{contacts[message.handle_id].id}}</h4>
-      <h4 ng-show="!message.is_from_me">{{contacts[message.handle_id].id}}</h4>
-      <p>{{message.text}}</p>
+    <div class="recipient">
+      <h4>{{contacts[current].id}}</h4>
+      <ul>
+        <li><a ng-href="/messages/{{current}}">Chat</a></li>
+        <li><a ng-href="/attachments/{{current}}">Attachments</a></li>
+        <li><a ng-href="/links/{{current}}">Links</a></li>
+      </ul>
     </div>
 
-    <div ng-show="viz.url_only" ng-repeat="message in messages | filter:search | isLink" class="message" ng-class="{'me': message.is_from_me}">
-      <p>{{match(message.text) || 'no'}}</p>
+    <input type="text" ng-model="search.text">
+    <label>Only links: <input type="checkbox" ng-model="viz.url_only"></label>
+
+    <div class="links">
+      <div ng-hide="viz.url_only"
+           ng-repeat="message in messages | filter:search"
+           class="link"
+           ng-class="{'me': message.is_from_me}">
+        <div>{{message.text}}</div>
+        <div class="author">
+          <span ng-show="message.is_from_me">(me)</span>
+          <span ng-show="!message.is_from_me">({{contacts[message.handle_id].id}})</span>
+        </div>
+      </div>
+
+      <div ng-show="viz.url_only"
+           ng-repeat="message in messages | filter:search | isLink"
+           class="only-links link"
+           ng-class="{'from-me': message.is_from_me}">
+        <div>
+          <a ng-href="{{match(message.text) || 'no'}}" target="blank">{{match(message.text) || 'no'}}</a>
+        </div>
+        <div class="author">
+          <span ng-show="message.is_from_me">(me)</span>
+          <span ng-show="!message.is_from_me">({{contacts[message.handle_id].id}})</span>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -46,6 +71,9 @@
     .controller('imMessages', function($scope, $http, $location) {
       $scope.messages = []
       $scope.contacts = {};
+      $scope.viz = {};
+      $scope.viz.url_only = true;
+      $scope.current = $location.absUrl().replace(/.*\//,'');
 
       $http.get('/api/contacts')
         .success(function(contacts) {
@@ -58,7 +86,7 @@
 
       $http.get('/api/links/' + $location.absUrl().replace(/.*\//,''))
         .success(function(messages) {
-          $scope.messages = messages;
+          $scope.messages = messages.reverse();
         })
 
       $scope.match = match;

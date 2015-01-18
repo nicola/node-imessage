@@ -7,15 +7,17 @@
 </head>
 <body ng-controller="imMessages">
   <section class="container">
-    <input type="text" ng-model="search.text">
+    <input type="text" ng-model="search.id">
     
-    <div ng-repeat="contact in contacts | filter:search" class="message" ng-class="{'me': message.is_from_me}">
-      <h4>{{contact.id}}</h4>
-      <ul>
-        <li><a ng-href="/attachments/{{contact.ROWID}}">Attachments</a></li>
-        <li><a ng-href="/messages/{{contact.ROWID}}">Messages</a></li>
-        <li><a ng-href="/links/{{contact.ROWID}}">Links</a></li>
-      </ul>
+    <div class="recipients">
+      <div ng-repeat="contact in contacts | filter:search" class="recipient">
+        <h4>{{contact.id}}</h4>
+        <ul>
+          <li><a ng-href="/messages/{{contact.ROWID}}">Chat</a></li>
+          <li><a ng-href="/attachments/{{contact.ROWID}}">Attachments</a></li>
+          <li><a ng-href="/links/{{contact.ROWID}}">Links</a></li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -26,6 +28,7 @@
     .controller('imMessages', function($scope, $http) {
       $scope.messages = []
       $scope.contacts = {};
+      $scope.search = {};
 
       $http.get('/api/contacts')
         .success(function(contacts) {

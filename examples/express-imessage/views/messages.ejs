@@ -7,6 +7,14 @@
 </head>
 <body ng-controller="imMessages">
   <section class="container">
+    <div class="recipient">
+      <h4>{{contacts[current].id}}</h4>
+      <ul>
+        <li><a ng-href="/messages/{{current}}">Chat</a></li>
+        <li><a ng-href="/attachments/{{current}}">Attachments</a></li>
+        <li><a ng-href="/links/{{current}}">Links</a></li>
+      </ul>
+    </div>
     <input type="text" ng-model="search.text">
     
     <div ng-repeat="message in messages | filter:search" class="message" ng-class="{'me': message.is_from_me}">
@@ -24,6 +32,7 @@
     .controller('imMessages', function($scope, $http, $location) {
       $scope.messages = []
       $scope.contacts = {};
+      $scope.current = $location.absUrl().replace(/.*\//,'');
 
       $http.get('/api/contacts')
         .success(function(contacts) {
@@ -36,7 +45,7 @@
 
       $http.get('/api/messages/' + $location.absUrl().replace(/.*\//,''))
         .success(function(messages) {
-          $scope.messages = messages;
+          $scope.messages = messages.reverse();
         })
     })
   </script>

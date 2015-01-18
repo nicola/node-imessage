@@ -1,13 +1,22 @@
 body {
-  background: #131724;
-  color: #fff;
-  font-family: 'Lucida Grande';
+  font-family: sans-serif;
   font-size: 20px;
-  text-shadow: 0 1px 1px #000;
 }
 
 p {
   font-size: 1.5em;
+}
+
+a {
+  color: #346DFF;
+  text-decoration: none;
+}
+
+.recipients {
+  
+}
+.recipient {
+  
 }
 
 section {
@@ -42,7 +51,7 @@ section {
 
 }
 .message img {
-  width: 200px;
+  width: 70%;
 }
 .grid .message {
   display: inline-block; /* Display inline-block, and absolutely NO FLOATS! */
@@ -54,4 +63,36 @@ section {
 }
 .grid .author {
   display: none;
+}
+.recipient h4 {
+  margin-bottom: 0px;
+}
+.recipient ul {
+  margin: 0;
+  padding: 0;
+}
+.recipient li {
+  margin-right: 5px;
+  display: inline;
+}
+
+#links-page .link {
+  font-size: 1em;
+}
+
+.only-links.from-me {
+  color: #aaa;
+}
+
+.author {
+  font-size: 0.7em;
+  font-weight: 600;
+}
+
+#links-page .link {
+  margin-bottom: 10px;
+}
+
+#links-page .links {
+  margin-top: 30px;
 }

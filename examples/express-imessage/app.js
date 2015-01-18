@@ -76,7 +76,9 @@ app.get("/api/attachments/:id", function (req, res) {
   im.getAttachmentsFromId(req.params.id, function(err, data) {
     res.json(data.map(function(d) {
       d.attributedBody = null;
-      d.filename = d.filename.replace('~', getUserHome());
+      if (d.filename) {
+        d.filename = d.filename.replace('~', getUserHome());
+      }
       delete d.attributedBody;
       return d;
     }));
