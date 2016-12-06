@@ -1,83 +1,103 @@
 #!/usr/bin/env node
 
-var iMessage = require('../index.js');
-var moment = require('moment');
-var im = new iMessage();
+'use strict';
 
-var parser = require("nomnom");
+var iMessage = require('../index.js');
+var moment   = require('moment');
+var Promise  = require('bluebird');
+var im       = new iMessage();
+
+var parser = require('nomnom');
 
 parser.command('search')
   .option('count', {
-    help: "Just return the count",
+    help: 'Just return the count',
     flag: true
   })
   .option('json', {
-    help: "Print in json format",
+    help: 'Print in json format',
     flag: true
   })
   .option('recipient', {
-    help: "Specify recepient",
+    help: 'Specify recepient',
   })
   .callback(function(opts) {
-    if (opts.recipient) {
-      im.getMessagesFromId(opts.recipient, opts[1], function(err, messages) {
-        if (err) return console.log("Error in retrieveing messages", err);
-        if (opts.count) return console.log(messages.length);
-        if (opts.json) return console.log(messages);
+    Promise.try(function () {
+      if (opts.recipient) {
+        return im.getMessagesFromId(opts.recipient, opts[1])
+          .then(function (messages) {
+            if (opts.count) return console.log(messages.length);
+            if (opts.json) return console.log(messages);
 
-        messages.forEach(function(m) {
-          if (m.is_from_me) {
-            console.log("Me to", opts.recipient);
-          } else {
-            console.log(opts.recipient + ' to me');
-          }
-          console.log(m.text);
-          console.log("Sent:", moment((m.date + iMessage.OSX_EPOCH)*1000).fromNow());
-          console.log('---');
-        });
-      });
-    } else {
-      im.getMessages(opts[1], true, function(err, messages) {
-        if (err) return console.log("Error in retrieveing messages", err);
-        if (opts.count) return console.log(messages.length);
-        if (opts.json) return console.log(messages);
+            messages.forEach(function (message) {
+              if (message.is_from_me) {
+                console.log('Me to', opts.recipient);
+              }
+              else {
+                console.log(opts.recipient + ' to me');
+              }
+              console.log(message.text);
+              console.log('Sent:', moment((message.date + iMessage.OSX_EPOCH)*1000).fromNow());
+              console.log('---');
+            });
+          });
+      }
+      else {
+        return im.getMessages(opts[1], true)
+          .then(function (messages) {
+            if (opts.count) return console.log(messages.length);
+            if (opts.json) return console.log(messages);
 
-        messages.forEach(function(m) {
-          if (m.is_from_me) {
-            console.log("Me to", m.id, "("+m.handle_id+")");
-          } else {
-            console.log(m.id, "("+m.handle_id+")" + " to me");
-          }
-          console.log(m.text);
-          console.log("Sent:", moment((m.date + iMessage.OSX_EPOCH)*1000).fromNow());
-          console.log('---');
-        });
-      });
-    }
+            messages.forEach(function(message) {
+              if (message.is_from_me) {
+                console.log('Me to', message.id, '('+message.handle_id+')');
+              } else {
+                console.log(message.id, '('+message.handle_id+')' + ' to me');
+              }
+              console.log(message.text);
+              console.log('Sent:', moment((message.date + iMessage.OSX_EPOCH)*1000).fromNow());
+              console.log('---');
+            });
+          });
+      }
+    })
+    .catch(function (err) {
+      console.log('Error retrieveing messages', err);
+    })
+    .finally(function () {
+      return im.disconnect();
+    });
   })
-  .help("Search messages with particular");
+  .help('Search messages with particular');
 
 parser.command('recipients')
   .option('json', {
-    help: "Print in json format",
+    help: 'Print in json format',
     flag: true
   })
   .option('count', {
-    help: "Just return the count",
+    help: 'Just return the count',
     flag: true
   })
   .callback(function(opts) {
-    im.getRecipients(opts[1], function(err, recipients) {
-      if (err) return console.log("Error in retrieveing recipients", err);
-      if (opts.count) return console.log(recipients.length);
-      if (opts.json) return console.log(recipients);
-      recipients.forEach(function(m) {
-        console.log("name:", m.id);
-        console.log("id:", m.ROWID);
-        console.log('---');
+    im.getRecipients(opts[1])
+      .then(function (recipients) {
+        if (opts.count) return console.log(recipients.length);
+        if (opts.json) return console.log(recipients);
+
+        recipients.forEach(function(m) {
+          console.log('name:', m.id);
+          console.log('id:', m.ROWID);
+          console.log('---');
+        });
+      })
+      .catch(function (err) {
+        console.log('Error retrieveing messages', err);
+      })
+      .finally(function () {
+        return im.disconnect();
       });
-    });
   })
-  .help("Search messages with particular");
+  .help('Search messages with particular');
 
 parser.parse();
