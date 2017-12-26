@@ -10,6 +10,7 @@
     "ejs-locals": ">=0.2.6",
     "express": "^4.10.2",
     "express-session": "^1.9.1",
+    "imessage": "^0.1.5",
     "moment": "^2.8.3",
     "mongoose": "^3.8.19",
     "passport": "^0.2.1",

@@ -40,6 +40,8 @@ Options:
    --count       Just return the count
    --recipient   ID of the recipient
    --json        Print in json format
+   --path    iMessage path to the chat.db
+
 ```
 
 #### Recipients
@@ -50,6 +52,7 @@ Usage: imessagejs recipients ["recipient name to filter"] [options]
 Options:
    --count   Just return the count
    --json    Print in json format
+   --path    iMessage path to the chat.db
 ```
 
 ### NodeJS Library

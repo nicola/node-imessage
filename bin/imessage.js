@@ -2,7 +2,6 @@
 
 var iMessage = require('../index.js');
 var moment = require('moment');
-var im = new iMessage();
 
 var parser = require("nomnom");
 
@@ -18,7 +17,12 @@ parser.command('search')
   .option('recipient', {
     help: "Specify recepient",
   })
+  .option('path', {
+    help: "iMessage path to the chat.db",
+    flag: true
+  })
   .callback(function(opts) {
+    var im = new iMessage(opts);
     if (opts.recipient) {
       im.getMessagesFromId(opts.recipient, opts[1], function(err, messages) {
         if (err) return console.log("Error in retrieveing messages", err);
@@ -37,6 +41,7 @@ parser.command('search')
         });
       });
     } else {
+      var im = new iMessage(opts);
       im.getMessages(opts[1], true, function(err, messages) {
         if (err) return console.log("Error in retrieveing messages", err);
         if (opts.count) return console.log(messages.length);
@@ -66,7 +71,12 @@ parser.command('recipients')
     help: "Just return the count",
     flag: true
   })
+  .option('path', {
+    help: "iMessage path to the chat.db",
+    flag: true
+  })
   .callback(function(opts) {
+    var im = new iMessage(opts);
     im.getRecipients(opts[1], function(err, recipients) {
       if (err) return console.log("Error in retrieveing recipients", err);
       if (opts.count) return console.log(recipients.length);
