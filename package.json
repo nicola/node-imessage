@@ -12,7 +12,7 @@
     "moment": "^2.8.3",
     "nomnom": "^1.8.1",
     "q": "^1.1.1",
-    "sqlite3": "^3.1.13"
+    "sqlite3": "^4.1.0"
   },
   "bin": {
     "imessagejs": "./bin/imessage.js"
